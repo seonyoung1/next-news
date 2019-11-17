@@ -1,22 +1,70 @@
 import React from 'react';
 import Link from "next/link";
+import PropTypes from "prop-types";
+import {useRouter} from "next/router";
 
 const Header = () => {
+    const categoryList = [
+        {
+            id: 0,
+            title: "business",
+            address: "business"
+        },
+        {
+            id: 1,
+            title: "technology",
+            address: "technology"
+        },
+        {
+            id: 2,
+            title: "science",
+            address: "science"
+        },
+        {
+            id: 3,
+            title: "entertainment",
+            address: "entertainment"
+        },
+        {
+            id: 4,
+            title: "sport",
+            address: "sport"
+        },
+        {
+            id: 5,
+            title: "health",
+            address: "health"
+        },
+    ];
+    const routes = useRouter();
+
     return (
         <header>
-            <h1>News</h1>
+            <h1><Link href="/"><a>News</a></Link></h1>
             <nav>
                 <ul>
-                    <li><Link href="/category"><a>Business</a></Link></li>
-                    <li><Link href="/category"><a>Science</a></Link></li>
-                    <li><Link href="/category"><a>Entertainment</a></Link></li>
-                    <li><Link href="/category"><a>Sport</a></Link></li>
-                    <li><Link href="/category"><a>Health</a></Link></li>
-                    <li><Link href="/category"><a>Technology</a></Link></li>
+                    {categoryList.map(item =>
+                        <List title={item.title} address={item.address} key={item.id} query={routes.query.title} />
+                    )}
                 </ul>
             </nav>
+            <Link href="/search" scroll={false}><a>Search</a></Link>
         </header>
     );
+};
+
+const List = ({address, title, query}) => {
+    return(
+        <li className={address === query?"current-page":""}>
+            <Link href="/category/[title]" as={`/category/${address}`}><a>{title}</a></Link>
+        </li>
+    )
+};
+
+List.propTypes = {
+    address: PropTypes.string,
+    title: PropTypes.string,
+    query: PropTypes.string,
 };
 
 export default Header;

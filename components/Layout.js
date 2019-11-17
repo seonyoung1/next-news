@@ -4,17 +4,17 @@ import PropTypes from "prop-types";
 
 const Layout = ({children}) => {
     return (
-        <div>
+        <>
             <Header/>
-            <div>
+            <div id="container">
                 {children}
             </div>
-        </div>
+        </>
     );
 };
 
 Layout.propTypes = {
-    children: PropTypes.elementType,
+    children: PropTypes.element,
 };
 
 export default Layout;
