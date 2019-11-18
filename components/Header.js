@@ -2,6 +2,7 @@ import React from 'react';
 import Link from "next/link";
 import PropTypes from "prop-types";
 import {useRouter} from "next/router";
+import {Icon} from "antd";
 
 const Header = () => {
     const categoryList = [
@@ -37,7 +38,6 @@ const Header = () => {
         },
     ];
     const routes = useRouter();
-
     return (
         <header>
             <h1><Link href="/"><a>News</a></Link></h1>
@@ -48,14 +48,15 @@ const Header = () => {
                     )}
                 </ul>
             </nav>
-            <Link href="/search" scroll={false}><a>Search</a></Link>
+            {/*scroll={false}*/}
+            <Link href="/search"><a  className={`search ${routes.pathname==="/search"?"is-active":""}`}><Icon type="search" /></a></Link>
         </header>
     );
 };
 
 const List = ({address, title, query}) => {
     return(
-        <li className={address === query?"current-page":""}>
+        <li className={address === query?"is-current":""}>
             <Link href="/category/[title]" as={`/category/${address}`}><a>{title}</a></Link>
         </li>
     )

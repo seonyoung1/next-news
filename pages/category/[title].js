@@ -1,17 +1,35 @@
 import React from 'react';
 import {useRouter} from "next/router";
+import fetch from "isomorphic-unfetch";
+import PropTypes from "prop-types";
+import Post from "../../components/Post";
 
-const Title = () => {
+const List = props => {
     const router = useRouter();
-    // console.log(router);
     return (
-        <div>
-            <h2>{router.query.title}</h2>
-            <div>
-                목록
-            </div>
+        <div className="page_list">
+            <h2 className="sub_title">{router.query.title}</h2>
+            <ul className="news_list">
+                {props.result.map((content,idx) =>
+                    <li key={idx} className="post">
+                        <Post data={content} />
+                    </li>
+                )}
+            </ul>
         </div>
     );
 };
 
-export default Title;
+List.getInitialProps = async function({ query }) {
+    const res = await fetch(`https://newsapi.org/v2/top-headlines?q=&country=kr&category=${query.title}&apiKey=5dc506f2b92745a682db92e9aee902b7`);
+    const data = await res.json();
+    return {
+        result: data.articles,
+    }
+};
+
+List.propTypes = {
+    result: PropTypes.array,
+};
+
+export default List;

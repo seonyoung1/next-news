@@ -1,20 +1,73 @@
+@charset "utf-8";
+@import "module/mixins";
+@import "module/variables";
 @import "reset.scss";
 
 #wrapper{
-    max-width:1280px;margin:0 auto;width:100%;min-height:150vh;
+    max-width:1280px;margin:0 auto;width:100%;
 }
 
 header{
+    position:relative;height:60px;
+    h1{
+        position:absolute;left:0;top:0;font-size:1.5em;line-height:1.5em;padding:15px 0;
+        a{color:#000;}
+    }
     nav{
+        padding-left:100px;padding-right:80px;padding-top:20px;text-align:right;
         li{
+            display:inline-block;padding:0 20px;font-size:1.15em;
+            &.is-current{
+                text-decoration:underline;
+                a{color:#000;}
+            }
+        }
+    }
+    .search{
+        position:absolute;right:0;top:0;width:60px;height:60px;text-align:center;vertical-align:middle;
+        display:flex;justify-content:center;align-items:center;font-size:1.5em;
+        &.is-active{
+            color:#000;
+        }
+    }
+}
 
-            &.current-page{
-                text-decoration: underline;
+footer{padding:15px 0;text-align:center;color:#666;}
+
+#container{
+    padding-top:30px;padding-bottom:80px;min-height:100vh;
+}
+
+.sub_title{
+    padding:20px 0;text-transform:uppercase;font-size:1.8em;font-weight:bold;
+}
+.news_list{
+    border-top:1px solid #ddd;
+    .post{
+         height:195px;margin:15px 0;border-bottom:1px solid #ddd;
+        .thumb{
+            position:relative;float:left;padding-right:20px;width:340px;
+            > div{
+                position:relative;width:100%;height:0;padding-top:56.25%;overflow:hidden;
+            }
+            img{position:absolute;left:50%;top:50%;width:100%;transform:translate(-50%,-50%);}
+        }
+        .contents{
+            .title{
+                font-size:1.5em;padding:10px 0;
+            }
+            .desc{
+                padding-bottom:10px;
             }
         }
     }
 }
 
-#container{
-    padding-top:30px;
+.pagination{
+    text-align:center;margin-top:30px;
+    li{
+        display:inline-block;margin:0 10px;font-size:1.1em;
+        a{display:block;color:#999}
+        &.on a{color:#1890ff;text-decoration:underline;}
+    }
 }

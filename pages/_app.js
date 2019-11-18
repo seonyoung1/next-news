@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
 import "../styles/common.scss";
 
-const News = ({Component}) => {
+const News = ({Component, pageProps}) => {
     return (
         <div id="wrapper">
             <Head>
                 <title>News</title>
             </Head>
             <Layout>
-                <Component />
+                <Component {...pageProps} />
             </Layout>
         </div>
     );
@@ -20,6 +20,7 @@ const News = ({Component}) => {
 
 News.propTypes = {
     Component: PropTypes.elementType,
+    pageProps: PropTypes.object,
 };
 
 export default News;
