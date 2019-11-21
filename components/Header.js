@@ -4,6 +4,11 @@ import PropTypes from "prop-types";
 import {useRouter} from "next/router";
 import {Icon} from "antd";
 
+const dummy = {
+    isLoggedIn: false,
+    user: "",
+};
+
 const Header = () => {
     const categoryList = [
         {
@@ -49,7 +54,10 @@ const Header = () => {
                 </ul>
             </nav>
             {/*scroll={false}*/}
-            <Link href="/search"><a  className={`search ${routes.pathname==="/search"?"is-active":""}`}><Icon type="search" /></a></Link>
+            <Link href="/search"><a className={`btn search ${routes.pathname==="/search"?"is-active":""}`}><Icon type="search" /></a></Link>
+            <Link href="/profile"><a className={`btn login ${routes.pathname==="/profile"?"is-active":""}`}>
+                {dummy.isLoggedIn ? <Icon type="user" /> : <Icon type="login" />}
+            </a></Link>
         </header>
     );
 };
