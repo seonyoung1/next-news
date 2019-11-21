@@ -4,7 +4,7 @@
 @import "reset.scss";
 
 #wrapper{
-    max-width:1280px;margin:0 auto;width:100%;padding-top:60px;
+    max-width:1280px;margin:0 auto;width:100%;padding:60px 20px 20px;
 }
 
 header{
@@ -73,5 +73,30 @@ footer{padding:15px 0;text-align:center;color:#666;}
         display:inline-block;margin:0 10px;font-size:1.1em;
         a{display:block;color:#999}
         &.on a{color:#1890ff;text-decoration:underline;}
+    }
+}
+
+form{
+    width:100%;max-width:600px;margin-top:30px;margin-left:auto;margin-right:auto;
+    h1{
+        font-size:1.5em;font-weight:bold;padding-bottom:20px;
+    }
+    > div{
+        padding:10px 0;display:flex;align-items:center;
+        label{
+            width:150px;
+        }
+        input{
+            width:100%;border:1px solid #ddd;border-radius:2px;padding:3px 10px;
+            &[type=checkbox]{
+                margin-right:10px;
+            }
+        }
+    }
+    .error{
+        display:block;color:red;
+    }
+    .group{
+        padding-top:20px;justify-content:center;border-top:1px solid #ddd;
     }
 }

@@ -1,4 +1,6 @@
 import React from 'react';
+import UserProfile from "../components/UserProfile";
+import LoginForm from "../components/LoginForm";
 
 const dummy = {
     isLoggedIn: false,
@@ -9,8 +11,8 @@ const Profile = () => {
     return (
         <div>
             {dummy.isLoggedIn ?
-                <div>안녕하세요 {dummy.user}님</div> :
-                <div>로그인하세요</div>
+                <UserProfile /> :
+                <LoginForm />
             }
         </div>
     );
