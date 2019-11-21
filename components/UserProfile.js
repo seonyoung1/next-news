@@ -1,14 +1,13 @@
 import React from 'react';
 
 const dummy = {
-    isLoggedIn: false,
-    user: "",
+    user: "홍길동",
 };
 
 const UserProfile = () => {
     return (
         <div>
-            안녕하세요. {dummy.user} 님.
+            <p>안녕하세요. {dummy.user} 님</p>
             <button>로그아웃</button>
         </div>
     );

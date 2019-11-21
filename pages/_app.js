@@ -9,7 +9,7 @@ const News = ({Component, pageProps}) => {
         <div id="wrapper">
             <Head>
                 <title>News</title>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.23.6/antd.min.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.23.6/antd.css" />
             </Head>
             <Layout>
                 <Component {...pageProps} />

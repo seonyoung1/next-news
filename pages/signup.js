@@ -36,19 +36,19 @@ const SignUp = () => {
         <div className="sign">
             <form onSubmit={onSubmit}>
                 <h1>회원가입</h1>
-                <div>
+                <div className="cell">
                     <label htmlFor="user-id">아이디</label>
                     <input type="text" name="user-id" value={id} onChange={onChangeId} />
                 </div>
-                <div>
+                <div className="cell">
                     <label htmlFor="user-nick">닉네임</label>
                     <input type="text" name="user-nick" value={nick} onChange={onChangeNick} />
                 </div>
-                <div>
+                <div className="cell">
                     <label htmlFor="user-pass">비밀번호</label>
                     <input type="password" name="user-pass" value={password} onChange={onChangePassword} />
                 </div>
-                <div>
+                <div className="cell">
                     <label htmlFor="user-pass-chk">비밀번호확인</label>
                     <input type="password" name="user-pass-chk" value={passwordChk} onChange={onChangePasswordChk} />
                 </div>
@@ -56,11 +56,11 @@ const SignUp = () => {
                     <input type="checkbox" name="user-term" onChange={onChangeTerm} defaultChecked={term} />
                     <label htmlFor="user-term">동의합니다.</label>
                 </div>
-                <div className="error">
+                <div className="cell error">
                     {passwordError && <p>비밀번호가 일치하지 않습니다</p>}
                     {termError && <p>약관에 동의해주세요</p>}
                 </div>
-                <div className="group">
+                <div className="cell group">
                     <Button type="primary" htmlType="submit">가입하기</Button>
                 </div>
             </form>

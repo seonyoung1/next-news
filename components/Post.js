@@ -6,9 +6,7 @@ const Post = ({data}) => {
     return (
         <>
             <div className="thumb">
-                <div>
-                    <img src={(data.urlToImage&&data.urlToImage.includes("http"))?data.urlToImage:"images/default.jpg"} alt={data.title} />
-                </div>
+                <div><div><img src={(data.urlToImage&&data.urlToImage.includes("http"))?data.urlToImage:"/images/default.jpg"} alt={data.title} /></div></div>
             </div>
             <div className="contents">
                 <div className="title">{data.title}</div>
