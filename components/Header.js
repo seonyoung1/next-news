@@ -45,7 +45,7 @@ const Header = () => {
     const routes = useRouter();
     return (
         <header>
-            <h1><Link href="/"><a>News</a></Link></h1>
+            <h1><Link href="/"><a>뉴우스</a></Link></h1>
             <nav>
                 <ul>
                     {categoryList.map(item =>
