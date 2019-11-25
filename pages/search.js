@@ -1,67 +1,88 @@
-import React, {useState, useCallback} from 'react';
-import {useInput} from "../hooks";
-import moment from "moment";
-import {DatePicker, Button, Icon, Select} from "antd";
+import React, { useState, useRef, useCallback } from "react";
+import axios from "axios";
+import SearchForm from "../components/SearchForm";
+import Post from "../components/Post";
+import "../styles/search.scss";
 
 const Search = () => {
-    const [view, setView] = useState(true);
-    const [keyword, onchange] = useInput();
-    const [dataRange, setDataRange] = useState([]);
-    const [select, setSelect] = useState("");
-    const dateFormat = 'YYYY-MM-DD';
-    function disabledDate(current) {
-        return current && current > moment().endOf("day");
-    }
+	const [keyword, setKeyword] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState(null);
+	const [result, setResult] = useState(null);
+	const input = useRef(null);
 
-    const handleDetail = useCallback(() => {
-        setView(!view);
-    },[view]);
+	const getSearch = useCallback(async (date, sort) => {
+		if( keyword === "" ){
+			alert("검색어를 입력해 주세요");
+			input.current.focus();
+			return;
+		}
+		let word = encodeURI(keyword);
+		let from = date[0];
+		let to = date[1];
+		let today = getToday();
+		if( from === undefined || from === "" ){
+			from = today;
+			to = today;
+		}
+		let sortBy = sort;
+		if( sortBy === undefined || sortBy === "" ) sortBy = "publishedAt";
+		// console.log(word, from, to, sortBy);
+		try{
+			const {data: { articles: res }} = await axios.get(`https://newsapi.org/v2/everything?q=${word}&from=${from}&to=${to}&sortBy=${sortBy}&language=en&apiKey=5dc506f2b92745a682db92e9aee902b7`);
+			setResult(res);
+			// console.log(res);
+		} catch{
+			setError(true);
+		} finally{
+			setIsLoading(false);
+			setKeyword("");
+		}
+	}, [keyword]);
 
-    const onSubmit = e => {
-        e.preventDefault();
-        if( dataRange.length > 0 ){
-            console.log(dataRange);
-        }
-        if( select !== "" ){
-            console.log(select);
-        }
-    };
+	const getToday = () => {
+		let today = new Date();
+		let dd = today.getDate();
+		let mm = today.getMonth()+1;
+		let yyyy = today.getFullYear();
+		if(dd<10) dd='0'+dd;
+		if(mm<10) mm='0'+mm;
+		today = yyyy+'/'+ mm +'/'+dd;
+		return today;
+	};
 
-    const range = useCallback((date, dateString) => {
-        // console.log(dateString);
-        setDataRange(dateString);
-    },[]);
+	const onChange = e => {
+		setKeyword(e.target.value)
+	};
 
-    const selectChange = useCallback((value) => {
-        // console.log(value);
-        setSelect(value);
-    }, []);
+	return (
+		<>
+			<SearchForm keyword={keyword} onchange={onChange} getSearch={getSearch} input={input} />
 
-    return (
-        <form onSubmit={onSubmit} className="search">
-            <div className="cell">
-                <input type="text" value={keyword} onChange={onchange} />
-                <Button type="primary" shape="circle" icon="search" htmlType="submit" />
-            </div>
-            <div className="btn_detail">
-                <button onClick={handleDetail}>상세검색 {view?<Icon type="up-circle" />:<Icon type="down-circle" />}</button>
-            </div>
-            <div className={`detail ${view?"is-active":""}`}>
-                <div className="cell">
-                    <span className="label">기간</span>
-                    <DatePicker.RangePicker onChange={range} disabledDate={disabledDate} format={dateFormat} />
-                </div>
-                <div className="cell">
-                    <span className="label">분류</span>
-                    <Select defaultValue="publishedAt" onChange={selectChange}>
-                        <Select.Option value="publishedAt">PublishedAt(dafault)</Select.Option>
-                        <Select.Option value="popularity">Popularity</Select.Option>
-                        <Select.Option value="relevancy">Relevancy</Select.Option>
-                    </Select>
-                </div>
-            </div>
-        </form>
-    );
+			{error ? "데이터가 없습니다" :
+				<>
+				{isLoading ? "로딩중..." : (
+					<>
+						{result &&
+							<>
+							{result.length > 0 &&
+								<ul className="news_list">
+									{result.map((content,idx) =>
+										<li key={idx} className="post">
+											<Post data={content} />
+										</li>
+									)}
+								</ul>
+							}
+							{result.length === 0  && "검색결과가 없습니다"}
+							</>
+						}
+					</>
+				)}
+				</>
+			}
+		</>
+	);
 };
 
 export default Search;

@@ -230,43 +230,4 @@ form {
 		justify-content: center;
 		border-top: 1px solid #ddd;
 	}
-	&.search {
-		margin-left: 0;
-		.cell {
-			margin-bottom: 10px;
-			input {
-				border-width: 0 0 1px;
-				height: 32px;
-				margin-right: 10px;
-				border-radius: 0;
-			}
-		}
-		.btn_detail {
-			margin-top: 10px;
-			color: #999;
-			text-align: right;
-		}
-		.detail {
-			&.is-active {
-				display: block;
-			}
-			display: none;
-			background-color: #fafafa;
-			padding: 15px 10px 5px;
-			margin-top: 5px;
-			.label,
-			label {
-				width: 80px;
-			}
-			input {
-				height: auto;
-			}
-		}
-		.ant-calendar-picker {
-			width: 100%;
-		}
-		.ant-calendar-picker-icon {
-			display: none;
-		}
-	}
 }
