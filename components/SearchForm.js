@@ -63,6 +63,8 @@ const SearchForm = ({ keyword, onchange, getSearch, input }) => {
 };
 
 SearchForm.prototype = {
+	keyword: PropTypes.string,
+	onchange: PropTypes.func,
 	getSearch: PropTypes.func,
 	input: PropTypes.element,
 };
