@@ -6,7 +6,7 @@
 		"dev": "node server.js",
 		"next": "next",
 		"build": "next build",
-		"start": "next start -p 9000"
+		"start": "NODE_ENV=production node server.js"
 	},
 	"author": "",
 	"license": "MIT",
