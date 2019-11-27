@@ -23,7 +23,7 @@ const Pagination = props => {
 				</li>
 				{page.map(i => (
 					<li key={i} className={i + 1 === current ? "on" : ""}>
-						<Link href={`/?page=${i + 1}`} as={`/${i + 1}`}>
+						<Link href={{ pathname: "/", query: { page: i + 1 } }} as={`/${i + 1}`}>
 							<a>{i + 1}</a>
 						</Link>
 					</li>
