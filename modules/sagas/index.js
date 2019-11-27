@@ -1,6 +1,10 @@
-import { all, call } from "redux-saga/effects";
+import { all, fork } from "redux-saga/effects";
 import user from "./user";
+import news from "./news";
 
 export default function* rootSaga() {
-	yield all([call(user)]);
+	yield all([
+		fork(user),
+		fork(news)
+	]);
 }

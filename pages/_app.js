@@ -1,17 +1,17 @@
 import React from "react";
 import Head from "next/head";
-import Layout from "../components/Layout";
 import PropTypes from "prop-types";
 import withRedux from "next-redux-wrapper";
 import { applyMiddleware, compose, createStore } from "redux";
 import { Provider } from "react-redux";
-import reducer from "../modules/store";
 import createSagaMiddleware from "redux-saga";
+import withReduxSaga from "next-redux-saga";
+import reducer from "../modules/store";
 import rootSaga from "../modules/sagas";
+import Layout from "../components/Layout";
 import "../styles/common.scss";
 
-const News = ({ Component, pageProps, store }) => {
-	return (
+const MyApp = ({ Component, pageProps, store }) => (
 		<div id="wrapper">
 			<Provider store={store}>
 				<Head>
@@ -24,30 +24,35 @@ const News = ({ Component, pageProps, store }) => {
 			</Provider>
 		</div>
 	);
-};
 
-News.propTypes = {
+MyApp.propTypes = {
 	Component: PropTypes.elementType,
 	pageProps: PropTypes.object,
 	store: PropTypes.object,
 };
 
-News.getInitialProps = async ({ Component, ctx }) => {
-	return {
-		pageProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {},
-	};
+MyApp.getInitialProps = async (context) => {
+	// console.log(context);
+	const { ctx, Component } = context;
+	let pageProps = {};
+	if (Component.getInitialProps) {
+		pageProps = await Component.getInitialProps(ctx);
+	}
+	return { pageProps };
 };
 
-const initStore = (initialState, options) => {
+const configureStore = (initialState, options) => {
 	const sagaMiddleware = createSagaMiddleware();
 	const middlewares = [sagaMiddleware];
-	const enhancer =
-		process.env.NODE_ENV === "production"
-			? compose(applyMiddleware(...middlewares))
-			: compose(applyMiddleware(...middlewares), !options.isServer && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== "undefined" ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f);
+	const enhancer = process.env.NODE_ENV === 'production'
+		? compose(applyMiddleware(...middlewares))
+		: compose(
+			applyMiddleware(...middlewares),
+			!options.isServer && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f,
+		);
 	const store = createStore(reducer, initialState, enhancer);
-	sagaMiddleware.run(rootSaga);
+	store.sagaTask = sagaMiddleware.run(rootSaga);
 	return store;
 };
 
-export default withRedux(initStore)(News);
+export default withRedux(configureStore)(withReduxSaga(MyApp));

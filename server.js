@@ -1,5 +1,6 @@
 const express = require("express");
 const next = require("next");
+const cors = require("cors");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
@@ -9,6 +10,14 @@ const handle = app.getRequestHandler();
 app.prepare()
 	.then(() => {
 		const server = express();
+
+		server.use(
+			cors({
+				// origin: "http://localhost:3000",
+				origin: true,
+				credentials: true,
+			}),
+		);
 
 		// server.get("/:page", (req, res) => {
 		// 	const actualPage = "/";
