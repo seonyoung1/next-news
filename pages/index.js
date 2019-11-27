@@ -4,14 +4,14 @@ import fetch from "isomorphic-unfetch";
 import Post from "../components/Post";
 import Pagination from "../components/Pagination";
 
-const Home = props => {
+const Home = ({ result, page, total }) => {
 	return (
 		<div className="page_main">
 			<h2 className="sub_title">Top Headline News</h2>
 			<ul className="news_list">
-				{props.result.length > 0 ? (
+				{result.length > 0 ? (
 					<>
-						{props.result.map((content, idx) => (
+						{result.map((content, idx) => (
 							<li key={idx} className="post">
 								<Post data={content} />
 							</li>
@@ -21,7 +21,7 @@ const Home = props => {
 					<li className="empty">데이터가 없습니다. 이전페이지로 돌아가주세요</li>
 				)}
 			</ul>
-			<Pagination current={props.page} total={props.total} />
+			<Pagination current={page} total={total} />
 		</div>
 	);
 };

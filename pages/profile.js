@@ -1,21 +1,11 @@
-import React from 'react';
+import React from "react";
 import UserProfile from "../components/UserProfile";
 import LoginForm from "../components/LoginForm";
-
-const dummy = {
-    isLoggedIn: false,
-    user: "",
-};
+import { useSelector } from "react-redux";
 
 const Profile = () => {
-    return (
-        <div>
-            {dummy.isLoggedIn ?
-                <UserProfile /> :
-                <LoginForm />
-            }
-        </div>
-    );
-};
+	const { isLoggedIn } = useSelector(state => state.user);
 
+	return <div>{isLoggedIn ? <UserProfile /> : <LoginForm />}</div>;
+};
 export default Profile;
